@@ -1,0 +1,108 @@
+/* General Styles */
+body {
+    font-family: 'Times New Roman', Times, serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('/static/images/background.jpg'); /* Path to your image */
+    background-size: cover; /* Ensures the image stretches to cover the entire screen */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    background-position: center center; /* Centers the image on the page */
+    background-attachment: fixed; /* Keeps the background fixed while scrolling */
+    color: #333; /* Default text color */
+}
+
+/* Black Rectangle (Header Bar) */
+.header-bar { /* Added styles for the black rectangle */
+    background-color: #ffffff; /* White background */
+    color: rgb(20, 46, 195); /* Dark blue text color */
+    display: flex; /* Use flexbox for layout */
+    align-items: center; /* Center items vertically */
+    justify-content: space-between; /* Space between dropdown and title */
+    padding: 10px 20px; /* Add spacing inside the header */
+    position: relative; /* Position header at the top */
+    height: 70px; /* Fixed height for the header */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+}
+
+/* Dropdown Menu */
+.dropdown { /* Styles for dropdown menu container */
+    position: relative;
+}
+
+.dropbtn { /* Styles for the dropdown button */
+    background-color: #ffffff; /* Same white as the header */
+    color: rgb(20, 46, 195);
+    border: none;
+    padding: 10px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.dropdown-content { /* Dropdown menu content (hidden by default) */
+    display: none; /* Hidden initially */
+    position: absolute; /* Positioned relative to the dropdown */
+    background-color: #f9f9f9; /* Light background for the dropdown items */
+    min-width: 150px; /* Minimum width of the dropdown menu */
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); /* Add shadow for dropdown */
+    z-index: 1; /* Ensure dropdown appears above other elements */
+    border-radius: 5px; /* Rounded corners for the dropdown */
+    overflow: hidden; /* Clip overflowing text or content */
+}
+
+.dropdown-content a { /* tyling for each dropdown item */
+    color: rgb(20, 46, 195);
+    text-decoration: none;
+    padding: 10px;
+    display: block;
+}
+
+.dropdown-content a:hover { /* Hover effect for dropdown items */
+    background-color: #47acfe;
+}
+
+.dropdown:hover .dropdown-content { /* Display dropdown when hovered */
+    display: block;
+}
+
+/* Title in Header Bar */
+.header-title { /* Center the title in the black rectangle */
+    margin: 0;
+    font-size: 24px;
+    text-align: center; /* Center text horizontally */
+    flex-grow: 1; /* Take up remaining space for proper centering */
+    font-weight: bold;
+    color: rgb(20, 46, 195);
+}
+
+/* Container Styles */
+.container {
+    max-width: 500px; /* Limit the width */
+    margin: 100px auto; /* Center the container */
+    padding: 10px; /* Add padding inside the container */
+    text-align: center; /* Center-align the text */
+    background-color: rgba(255, 255, 255, 0.5); /* White with 80% opacity (transparent) */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    border: 1px solid rgba(0, 0, 0, 0.2); /* Light gray border with 20% transparency */
+}
+
+h2 {
+    color: #555;
+}
+
+input[type="file"] {
+    margin: 20px 0;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}

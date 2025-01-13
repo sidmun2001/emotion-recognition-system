@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotion Recognition</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+     <!-- Black Rectangle (Header Bar) -->
+     <header class="header-bar">
+        
+        <!-- Dropdown Menu -->
+        <div class="dropdown">
+            <button class="dropbtn">☰</button>
+            <div class="dropdown-content">
+                <a href="/restart">Restart</a>
+                <a href="/delete">Delete</a>
+                <a href="/close">Close</a>
+            </div>
+        </div>
+        <!-- Title -->
+        <h1 class="header-title">Emotion Recognition System</h1>
+    </header>
+
+    <div class="container">
+        <h1>Emotion Recognition</h1>
+        <form action="/result" method="POST" enctype="multipart/form-data">
+            <label for="imageUpload">Upload your image:</label>
+            <input type="file" id="imageUpload" name="image" required>
+            <button type="submit">Analyze</button>
+        </form>
+    </div>
+</body>
+</html>
