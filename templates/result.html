@@ -7,10 +7,8 @@
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-    <!-- Black Rectangle (Header Bar) -->
+    <!-- Header -->
     <header class="header-bar">
-        
-        <!-- Dropdown Menu -->
         <div class="dropdown">
             <button class="dropbtn">☰</button>
             <div class="dropdown-content">
@@ -19,23 +17,26 @@
                 <a href="/close">Close</a>
             </div>
         </div>
-        <!-- Title -->
         <h1 class="header-title">Emotion Recognition System</h1>
     </header>
-    
+
+    <!-- Content -->
     <div class="container">
         <h1>Emotion Recognition Result</h1>
-        
-        <!-- Display the detected emotion -->
         <p>The detected emotion is: <strong>{{ emotion }}</strong></p>
-        
-        <!-- Display the uploaded image -->
+
+        <!-- Uploaded Image -->
         <h2>Uploaded Image:</h2>
-        <img src="{{ image_url }}" alt="Uploaded Image" style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 10px;">
-        <br>
-        
-        <!-- Link to go back to the homepage -->
-        <a href="/">Analyze another image</a>
+        <img src="{{ uploaded_image_url }}" alt="Uploaded Image" class="centered-image">
+
+        <!-- Preprocessed Image -->
+        <h2>Preprocessed Image:</h2>
+        <div class="image-container">
+            <img src="{{ preprocessed_image_url }}" class="centered-image">
+
+            <!-- Link to restart -->
+            <a href="/" class="button">Analyze another image</a>
+        </div>
     </div>
 </body>
 </html>

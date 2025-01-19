@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotion Recognition</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header class="header-bar">
+        <div class="dropdown">
+            <button class="dropbtn">☰</button>
+            <div class="dropdown-content">
+                <a href="/restart">Restart</a>
+                <a href="/delete">Delete</a>
+                <a href="/close">Close</a>
+            </div>
+        </div>
+        <h1 class="header-title">Emotion Recognition System</h1>
+    </header>
+
+    <div class="container">
+        <h1>Emotion Recognition</h1>
+
+        <!-- Option to upload an image from the computer -->
+        <form action="/result" method="POST" enctype="multipart/form-data">
+            <label for="imageUpload">Choose an image from your computer:</label>
+            <input type="file" id="imageUpload" name="image" accept="image/*">
+            <br><br>
+
+            <!-- Camera functionality -->
+            <label>Or take a picture:</label>
+            <video id="cameraStream" autoplay style="width: 100%; max-width: 500px;"></video>
+            <br>
+            <button id="takePhoto" type="button" class="button">Capture</button>
+            <br><br>
+
+            <!-- Hidden canvas to render the captured photo -->
+            <canvas id="photoCanvas" style="display: none;"></canvas>
+
+            <!-- Hidden input for camera-captured image -->
+            <input type="hidden" id="imageData" name="imageData">
+
+            <!-- Submit button -->
+            <button type="submit" class="button">Analyze</button>
+        </form>
+    </div>
+
+    
+    <!-- JavaScript for camera functionality -->
+    <script>
+        const video = document.getElementById('cameraStream');
+        const canvas = document.getElementById('photoCanvas');
+        const takePhotoBtn = document.getElementById('takePhoto');
+        const imageDataInput = document.getElementById('imageData');
+
+        // Start the camera
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then((stream) => {
+                video.srcObject = stream;
+            })
+            .catch((err) => {
+                console.error("Error accessing camera: ", err);
+            });
+
+        // Capture photo
+        takePhotoBtn.addEventListener('click', () => {
+            const context = canvas.getContext('2d');
+
+            // Resize image to a smaller size, e.g., 640x480
+            const resizeWidth = 640;
+            const resizeHeight = 480;
+
+            canvas.width = resizeWidth;
+            canvas.height = resizeHeight;
+            context.drawImage(video, 0, 0, resizeWidth, resizeHeight);
+
+            // Save the image data to the hidden input field (compressed image)
+            imageDataInput.value = canvas.toDataURL('image/jpeg', 0.8); // Compress to 80% quality
+        });
+
+    </script>
+
+
+</body>
+</html>

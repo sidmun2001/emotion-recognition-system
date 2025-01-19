@@ -11,6 +11,7 @@ body {
     color: #333; /* Default text color */
 }
 
+
 /* Black Rectangle (Header Bar) */
 .header-bar { /* Added styles for the black rectangle */
     background-color: #ffffff; /* White background */
@@ -23,6 +24,7 @@ body {
     height: 70px; /* Fixed height for the header */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
 }
+
 
 /* Dropdown Menu */
 .dropdown { /* Styles for dropdown menu container */
@@ -64,6 +66,7 @@ body {
     display: block;
 }
 
+
 /* Title in Header Bar */
 .header-title { /* Center the title in the black rectangle */
     margin: 0;
@@ -73,6 +76,7 @@ body {
     font-weight: bold;
     color: rgb(20, 46, 195);
 }
+
 
 /* Container Styles */
 .container {
@@ -105,4 +109,45 @@ button {
 
 button:hover {
     background-color: #0056b3;
+}
+
+
+/* Center the image and button together */
+.image-container {
+    display: flex;           /* Enable Flexbox */
+    flex-direction: column;  /* Arrange items vertically */
+    align-items: center;     /* Center items horizontally */
+    justify-content: center; /* Center items vertically */
+    text-align: center;      /* Ensure text is centered */
+    margin: 20px 0;          /* Add spacing above and below */
+    width: 100%;             /* Ensure the container spans the full width */
+    margin: auto;            /* Ensure the container is centered */
+}
+
+/* Styling for the image */
+.centered-image {
+    max-width: 80%;                               /* Scale the image to fit within 80% of its container */
+    height: auto;                                 /* Maintain the aspect ratio */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    margin-bottom: 15px;                          /* Add space below the image for the button */
+    margin: auto;                                 /* Center the image */
+}
+
+/* Styling for the button */
+.button {
+    display: inline-block;         /* Make the link behave like a button */
+    margin-top: 15px;              /* Add space above the button */
+    padding: 10px 20px;            /* Add padding inside the button */
+    font-size: 16px;               /* Set font size */
+    color: white;                  /* Text color */
+    background-color: #007BFF;     /* Button background color */
+    border: none;                  /* Remove border */
+    border-radius: 5px;            /* Rounded corners */
+    text-decoration: none;         /* Remove underline */
+    cursor: pointer;               /* Show pointer cursor */
+}
+
+/* Button Hover Effect */
+.button:hover {
+    background-color: #0056b3;     /* Darken the button on hover */
 }
