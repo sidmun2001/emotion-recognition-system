@@ -10,11 +10,7 @@ cors  = CORS(app, origins = '*')
 UPLOAD_FOLDER = 'uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-database = ["Alice", "Bob"]
 
-@app.route('/api/users', methods=['GET'])
-def users():
-    return jsonify({'users': database})
 
 @app.route('/upload2', methods=['POST'])
 def upload_image():
@@ -28,7 +24,7 @@ def upload_image():
         return jsonify({'message': 'Image uploaded successfully!', 'path': image_path}), 200
 
     return jsonify({'error': 'Failed to save image'}), 500
-
+8
 # Configure the existing upload folders
 UPLOAD_FOLDER = 'images/uploaded images'
 PREPROCESSED_FOLDER = 'images/preprocessed images'

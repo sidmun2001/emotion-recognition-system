@@ -1,11 +1,13 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { use } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 
 const ResultPage = () => {
 
       // Use the useLocation hook to retrieve state
   const location = useLocation();
+  navigate = useNavigate();
   //const { uploadedImageUrl, preprocessedImageUrl, emotion } = location.state || {};
 
     const uploadedImageUrl = 'http://127.0.0.1:8080/uploads/captured_image.jpg';
@@ -23,6 +25,7 @@ const ResultPage = () => {
       <img src={preprocessedImageUrl} alt="Preprocessed image" style={{ width: '300px', height: '300px', objectFit: 'cover' }} />
 
       <h2>Recognized Emotion: {emotion}</h2>
+    <button onClick={() => navigate('/')}>Back to Homepage</button>
     </div>
   );
 };
