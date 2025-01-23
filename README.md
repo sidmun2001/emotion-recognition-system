@@ -19,7 +19,7 @@
     pip install -r requirements.txt
     ```
 
-4. **Set the Flask application environment variable:**
+4. **Set the Flask application environment variable:(OPTIONAL)**
     ```bash
     export FLASK_APP=app.py  # On Windows use `set FLASK_APP=app.py`
     export FLASK_ENV=development  # On Windows use `set FLASK_ENV=development`
