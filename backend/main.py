@@ -1,5 +1,5 @@
 
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_from_directory
 from flask_cors import CORS
 import os
 from preprocessing import preprocess_image
@@ -16,7 +16,7 @@ database = ["Alice", "Bob"]
 def users():
     return jsonify({'users': database})
 
-@app.route('/upload', methods=['POST'])
+@app.route('/upload2', methods=['POST'])
 def upload_image():
     if 'image' not in request.files:
         return jsonify({'error': 'No image file provided'}), 400
@@ -36,83 +36,54 @@ PREPROCESSED_FOLDER = 'images/preprocessed images'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['PREPROCESSED_FOLDER'] = PREPROCESSED_FOLDER
 
-# Route for serving uploaded and preprocessed images
+# Route for showing uploaded and preprocessed images
+#http://127.0.0.1:8080/uploads/captured_image.jpg
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
-
+#shows preprocessed imagges
+# http://127.0.0.1:8080/preprocessed/preprocessed_captured_image.jpg
 @app.route('/preprocessed/<filename>')
 def processed_file(filename):
     return send_from_directory(app.config['PREPROCESSED_FOLDER'], filename)
 
 
-# # Route for the homepage
-# @app.route('/')
-# def index():
-#     return render_template('index.html')
+
 
 
 # Route to handle the form submission
-@app.route('/result', methods=['POST'])
-def result():
+@app.route('/upload', methods=['POST'])
+def upload():
     if 'image' not in request.files:
-        return "No file part in the request", 400
+        return jsonify({'error': 'No image'}), 400
 
     file = request.files['image']
-    if file.filename == '':
-        return "No file selected for upload", 400
+    if file:
 
-    # Save the uploaded file to the existing uploaded images folder
-    filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
-    file.save(filepath)
+        # Save the uploaded file to the existing uploaded images folder
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+        file.save(filepath)
 
-    # Define the path for the preprocessed image in the preprocessed images folder
-    preprocessed_path = os.path.join(app.config['PREPROCESSED_FOLDER'], f"preprocessed_{file.filename}")
+        # Define the path for the preprocessed image in the preprocessed images folder
+        preprocessed_path = os.path.join(app.config['PREPROCESSED_FOLDER'], f"preprocessed_{file.filename}")
 
-    # Call the preprocessing function
-    preprocessed_success = preprocess_image(filepath, preprocessed_path)
-    if not preprocessed_success:
-        return "Error in preprocessing the image", 500
+        # Call the preprocessing function
+        preprocessed_success = preprocess_image(filepath, preprocessed_path)
+        if not preprocessed_success:
+            return "Error in preprocessing the image", 500
 
-    # Placeholder for the detected emotion
-    detected_emotion = "Happy"  # Replace with model prediction when integrated
+        # Placeholder for the detected emotion
+        detected_emotion = "Happy"  # Replace with model prediction when integrated
 
-    # Generate URLs for the uploaded and preprocessed images
-    uploaded_image_url = f'/uploads/{file.filename}'
-    preprocessed_image_url = f'/preprocessed/preprocessed_{file.filename}'
+        # Generate URLs for the uploaded and preprocessed images
+        uploaded_image_url = f'emotion-recognition-system/backend/images/uploads/{file.filename}'
+        
+        preprocessed_image_url = f'emotion-recognition-system/backend/images/preprocessed images/preprocessed_{file.filename}'
+        return jsonify({'emotion': detected_emotion, 'uploaded_image_url': uploaded_image_url, 'preprocessed_image_url': preprocessed_image_url}), 200
 
-    # Render the result page with both images
-    return render_template(
-        'result.html',
-        emotion=detected_emotion,
-        uploaded_image_url=uploaded_image_url,
-        preprocessed_image_url=preprocessed_image_url
-    )
+    return jsonify({'error': 'Failed to save image'}), 500
 
 
-# Route to restart the process
-@app.route('/restart', methods=['GET'])
-def restart():
-    return redirect(url_for('index'))  # Redirects to the homepage
-
-
-# Route to delete all images in both folders
-@app.route('/delete', methods=['GET'])
-def delete():
-    for folder in [app.config['UPLOAD_FOLDER'], app.config['PREPROCESSED_FOLDER']]:
-        for file in os.listdir(folder):
-            os.remove(os.path.join(folder, file))
-    return redirect(url_for('index'))  # Redirects to the homepage after deletion
-
-
-# Route to close the server
-@app.route('/close', methods=['GET'])
-def close():
-    func = request.environ.get('werkzeug.server.shutdown')
-    if func is None:
-        raise RuntimeError("Not running with the Werkzeug Server")
-    func()  # Shuts down the server
-    return "Server shutting down..."
 
 
 if __name__ == '__main__':

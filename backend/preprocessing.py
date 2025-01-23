@@ -9,6 +9,7 @@ def preprocess_image(filepath, output_path):
     # 1. Resizing to 224x224
     # 2. Converting to grayscale
     # 3. Normalizing pixel values
+    print("preprocessing image")
     try:
         # Load the image using OpenCV
         image = cv2.imread(filepath)
@@ -24,6 +25,7 @@ def preprocess_image(filepath, output_path):
             cropped_image = image  # Fallback to the original image
         else:
             x, y, w, h = faces[0]  # Take the first detected face
+            print(f"Face detected at x={x}, y={y}, w={w}, h={h}")
             if w < 50 or h < 50:  # Ensure the face is large enough
                 print("Face too small; skipping preprocessing.")
                 return False
