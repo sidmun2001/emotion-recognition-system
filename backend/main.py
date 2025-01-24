@@ -80,8 +80,34 @@ def upload():
         
         preprocessed_image_url = f'emotion-recognition-system/backend/images/preprocessed images/preprocessed_{file.filename}'
         return jsonify({'emotion': detected_emotion, 'uploaded_image_url': uploaded_image_url, 'preprocessed_image_url': preprocessed_image_url}), 200
-
     return jsonify({'error': 'Failed to save image'}), 500
+
+
+
+
+@app.route('/delete-images', methods=['POST'])
+def delete_images():
+    uploaded_folder = './images/uploaded images'  # Path to uploaded images folder
+    preprocessed_folder = './images/preprocessed images'  # Path to preprocessed images folder
+
+    try:
+        # Delete all files in the uploaded images folder
+        if os.path.exists(uploaded_folder):
+            for filename in os.listdir(uploaded_folder):
+                file_path = os.path.join(uploaded_folder, filename)
+                if os.path.isfile(file_path):
+                    os.remove(file_path)
+        
+        # Delete all files in the preprocessed images folder
+        if os.path.exists(preprocessed_folder):
+            for filename in os.listdir(preprocessed_folder):
+                file_path = os.path.join(preprocessed_folder, filename)
+                if os.path.isfile(file_path):
+                    os.remove(file_path)
+        
+        return jsonify({"message": "All images in both folders deleted successfully."}), 200
+    except Exception as e:
+        return jsonify({"error": f"Failed to delete images: {str(e)}"}), 500
 
 
 
