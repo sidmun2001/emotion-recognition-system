@@ -13,7 +13,10 @@
     python -m venv venv
     source venv/bin/activate  # On Windows use `venv\Scripts\activate`
     ```
-
+    If you get scripts are disabled error, use this command: 
+        ```bash
+        Set-ExecutionPolicy Unrestricted -Scope Process
+        ```
 3. **Install the required dependencies:**
     ```bash
     pip install -r requirements.txt
