@@ -1,10 +1,12 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import Header from './Header';
+
 
 
 const ResultPage = () => {
 
-      // Use the useLocation hook to retrieve state
+  // Use the useLocation hook to retrieve state
   const location = useLocation();
   //const { uploadedImageUrl, preprocessedImageUrl, emotion } = location.state || {};
 
@@ -27,4 +29,6 @@ const ResultPage = () => {
   );
 };
 
-export default ResultPage;
+
+
+export default ResultPage; 

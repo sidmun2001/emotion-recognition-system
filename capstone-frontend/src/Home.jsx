@@ -1,20 +1,14 @@
-import { useState, useEffect, useRef } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import { use } from 'react'
-import axios from 'axios'
-import { BrowserRouter as Router, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
-import ResultPage from './ResultPage';
-
+import { useState, useRef } from 'react';
+import './App.css';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import Header from './Header';
 
 function Home() {
-  const [count, setCount] = useState(0)
-  const [users, setUsers] = useState([]);
-const navigate = useNavigate(); //useNavigate is a hook that returns the navigate function
-
   const videoRef = useRef(null);
   const [cameraStarted, setCameraStarted] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null); // State to store the uploaded file
+  const navigate = useNavigate();
 
   // Start the camera stream
   const startCamera = async () => {
@@ -27,18 +21,21 @@ const navigate = useNavigate(); //useNavigate is a hook that returns the navigat
     }
   };
 
-  // Capture the image and upload
+  // Capture the image from the camera and upload it
   const captureAndUpload = async () => {
     try {
+      if (!cameraStarted) {
+        alert('Please start the camera first!');
+        return;
+      }
+
       const canvas = document.createElement('canvas');
       const video = videoRef.current;
 
-      // Set canvas dimensions to match video
+      // Set canvas dimensions to match the video stream
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
       const ctx = canvas.getContext('2d');
-
-      // Draw the current video frame onto the canvas
       ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
       // Convert canvas to Blob
@@ -46,65 +43,105 @@ const navigate = useNavigate(); //useNavigate is a hook that returns the navigat
         canvas.toBlob(resolve, 'image/jpeg')
       );
 
-      // Prepare FormData for Axios request
       const formData = new FormData();
       formData.append('image', imageBlob, 'captured_image.jpg');
 
-      // Send the image to the backend
       const response = await axios.post('http://localhost:8080/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
+
       console.log('Image uploaded successfully:', response.data);
-      console.log('redirecting to result page');
 
-      const uploadedImageUrl = response.data.uploaded_image_url      ; // Example response field
-    const preprocessedImageUrl = response.data.preprocessed_image_url    ; // Example response field
-    const emotion = response.data.emotion; // Example response field
-
-       // Navigate to the result page with the response data
-       navigate('/result', { state: {
-        uploadedImageUrl,
-        preprocessedImageUrl,
-        emotion,
-       } });
-
-      
+      // Navigate to the result page with response data
+      const { uploadedImageUrl, preprocessedImageUrl, emotion } = response.data;
+      navigate('/result', {
+        state: {
+          uploadedImageUrl,
+          preprocessedImageUrl,
+          emotion,
+        },
+      });
     } catch (error) {
       console.error('Error capturing or uploading image:', error);
     }
   };
 
-  
+  // Handle file selection
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
 
+  // Upload the selected file
+  const uploadImage = async () => {
+    try {
+      if (!selectedFile) {
+        alert('Please choose a file before uploading.');
+        return;
+      }
 
-  
+      const formData = new FormData();
+      formData.append('image', selectedFile, selectedFile.name);
+
+      const response = await axios.post('http://localhost:8080/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      console.log('Image uploaded successfully:', response.data);
+
+      // Navigate to the result page with response data
+      const { uploadedImageUrl, preprocessedImageUrl, emotion } = response.data;
+      navigate('/result', {
+        state: {
+          uploadedImageUrl,
+          preprocessedImageUrl,
+          emotion,
+        },
+      });
+    } catch (error) {
+      console.error('Error uploading image:', error);
+    }
+  };
+
   return (
     <>
-    
-    <div className="App">
-    <div class="container">
-    <h1>Emotion Recognition</h1>
-       <div>
-      <video ref={videoRef} autoPlay style={{ width: '100%' }}></video>
-      {!cameraStarted && <button onClick={startCamera}>Start Camera</button>}
-      {cameraStarted && (
-        <button onClick={captureAndUpload}>Capture and Upload</button>
-      )}
-    </div>
-    <br></br>
+      <div className="App">
+        <Header />
+        <div className="container">
+          {/* Video preview */}
+          <video ref={videoRef} autoPlay className="video-preview"></video>
+          {!cameraStarted && (
+            <button onClick={startCamera} className="start-camera-btn">
+              Start Camera
+            </button>
+          )}
 
-        {/* <!-- Option to upload an image from the computer --> */}
-        <form action="/result" method="POST" enctype="multipart/form-data">
-            <label for="imageUpload">Choose an image from your computer:</label>
-            <input type="file" id="imageUpload" name="image" accept="image/*"></input>
-            <button type="submit" class="button">Analyze</button>
-        </form>
-    </div>
-    </div>
+          {/* Capture and Upload button appears when the camera is started */}
+          {cameraStarted && (
+            <button onClick={captureAndUpload} className="capture-upload-btn">
+              Capture and Upload
+            </button>
+          )}
+
+          {/* File Upload options */}
+          <div className="file-upload-container">
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="choose-file-btn"
+            />
+            <button onClick={uploadImage} className="upload-image-btn">
+              Upload Image
+            </button>
+          </div>
+        </div>
+      </div>
     </>
-  )
+  );
 }
 
-export default Home
+export default Home;
