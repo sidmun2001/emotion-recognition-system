@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './Home';
+import Home from './home';
 import ResultPage from './ResultPage';
 
 function App() {
@@ -7,7 +7,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/result" element={<ResultPage />} />
+        <Route path="/result" element={<ResultPage/>} />
       </Routes>
     </Router>
   );

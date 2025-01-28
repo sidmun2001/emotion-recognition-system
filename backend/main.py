@@ -76,9 +76,9 @@ def upload():
         detected_emotion = "Happy"  # Replace with model prediction when integrated
 
         # Generate URLs for the uploaded and preprocessed images
-        uploaded_image_url = f'emotion-recognition-system/backend/images/uploads/{file.filename}'
+        uploaded_image_url = f'http://127.0.0.1:8080/uploads/{file.filename}'
         
-        preprocessed_image_url = f'emotion-recognition-system/backend/images/preprocessed images/preprocessed_{file.filename}'
+        preprocessed_image_url = f'preprocessed_captured_image_1737685922608.jpg/preprocessed_{file.filename}'
         return jsonify({'emotion': detected_emotion, 'uploaded_image_url': uploaded_image_url, 'preprocessed_image_url': preprocessed_image_url}), 200
     return jsonify({'error': 'Failed to save image'}), 500
 

@@ -9,6 +9,7 @@ function Home() {
   const [cameraStarted, setCameraStarted] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null); // State to store the uploaded file
   const navigate = useNavigate();
+  
 
   // Start the camera stream
   const startCamera = async () => {
@@ -44,7 +45,9 @@ function Home() {
       );
 
       const formData = new FormData();
+      //const uniqueFilename = 'captured_image_' + Date.now() + '.jpg';
       formData.append('image', imageBlob, 'captured_image.jpg');
+      
 
       const response = await axios.post('http://localhost:8080/upload', formData, {
         headers: {
@@ -82,7 +85,9 @@ function Home() {
       }
 
       const formData = new FormData();
-      formData.append('image', selectedFile, selectedFile.name);
+      // formData.append('image', selectedFile, selectedFile.name);
+
+      formData.append('image', selectedFile, 'captured_image.jpg');
 
       const response = await axios.post('http://localhost:8080/upload', formData, {
         headers: {
@@ -100,6 +105,7 @@ function Home() {
           preprocessedImageUrl,
           emotion,
         },
+        key: Date.now(), // Add a unique key to force re-mounting the component
       });
     } catch (error) {
       console.error('Error uploading image:', error);
@@ -126,7 +132,7 @@ function Home() {
             </button>
           )}
 
-          {/* File Upload options */}
+          {/* File Upload options
           <div className="file-upload-container">
             <input
               type="file"
@@ -137,7 +143,7 @@ function Home() {
             <button onClick={uploadImage} className="upload-image-btn">
               Upload Image
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </>

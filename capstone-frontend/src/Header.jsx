@@ -59,9 +59,9 @@ const Header = () => {
           ☰ {/* Hamburger icon */}
         </button>
         <ul className={`dropdown-menu ${dropdownVisible ? 'visible' : ''}`}>
-          <li onClick={() => handleDropdownAction('restart')}>Restart</li>
+          {/* <li onClick={() => handleDropdownAction('restart')}>Restart</li> */}
           <li onClick={() => handleDropdownAction('delete')}>Delete</li>
-          <li onClick={() => handleDropdownAction('exit')}>Exit</li>
+          {/* <li onClick={() => handleDropdownAction('exit')}>Exit</li> */}
         </ul>
       </div>
       {/* Title */}
