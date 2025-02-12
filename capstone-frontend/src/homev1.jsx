@@ -4,9 +4,6 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Header from './Header';
 
-import * as React from 'react';
-import { PieChart } from 'react-minimal-pie-chart';
-
 function Home() {
   const videoRef = useRef(null);
   const [cameraStarted, setCameraStarted] = useState(false);
@@ -149,9 +146,12 @@ function Home() {
           </div> */}
 
 
+        
+
 
         </div>
-    
+
+      
       </div>
     </>
   );

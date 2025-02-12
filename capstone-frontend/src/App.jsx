@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './home';
+import Home from './Home';
 import ResultPage from './ResultPage';
+import EmotionPieChart from './EmotionPieChart';
 
 function App() {
   return (
@@ -8,6 +9,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/result" element={<ResultPage/>} />
+        <Route path="/chart" element={<EmotionPieChart/>} />
       </Routes>
     </Router>
   );
