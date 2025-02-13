@@ -28,7 +28,7 @@
     export FLASK_ENV=development  # On Windows use `set FLASK_ENV=development`
     ```
 
-5. **Run the Flask application:**
+5.  **Run the Flask application:** *NOT REQUIRED*
     ```bash
     flask run
     ```
@@ -36,10 +36,12 @@
 6. **Access the application:**
     Open your web browser and go to `http://127.0.0.1:5000/`.
 
+
 ## Additional Notes
 
 - Ensure you have Python and pip installed on your system.
 - If you encounter any issues, check the Flask documentation or the project's issue tracker for help.
+
 
 ## Instructions to Run React + Vite Frontend
 

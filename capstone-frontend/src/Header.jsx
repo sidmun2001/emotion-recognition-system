@@ -1,73 +1,88 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useRef, useEffect } from 'react';
+import './App.css';
 import axios from 'axios';
 
-const Header = () => {
-  const [dropdownVisible, setDropdownVisible] = useState(false);
-  const navigate = useNavigate();
 
-  // Close dropdown when clicking outside
+
+
+
+function Header() 
+{
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+  const dropdownRef = useRef(null);
+
+
+
+  // Close dropdown if clicking outside
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (!event.target.closest('.dropdown')) {
+    function handleClickOutside(event) 
+    {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) 
+      {
         setDropdownVisible(false);
       }
-    };
+    }
 
-    document.addEventListener('click', handleClickOutside);
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => 
+    {
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
-  const handleDropdownAction = async (action) => {
-    switch (action) {
-      case 'restart':
-        navigate('/');
-        break;
-      case 'delete':
-        try {
-          const response = await axios.post('http://localhost:8080/delete-images');
-          if (response.status === 200) {
-            alert('All images deleted successfully.');
-          } else {
-            alert('Failed to delete images.');
-          }
-        } catch (error) {
-          console.error('Error deleting images:', error);
-        }
-        break;
-      case 'exit':
-        alert('Exit action may not work due to browser restrictions.');
-        break;
-      default:
-        console.log('Unknown action:', action);
+
+
+  // Function to delete images
+  const deleteImages = async () => 
+  {
+    try 
+    {
+      const response = await axios.post('http://localhost:8080/delete-images');
+      if (response.status === 200) 
+      {
+        alert('All images deleted successfully!');
+      } 
+      
+      else 
+      {
+        alert('Failed to delete images.');
+      }
+    } 
+    
+    catch (error) 
+    {
+      console.error('Error deleting images:', error);
+      alert('Error deleting images.');
     }
   };
 
+
+
   return (
     <div className="header">
-      {/* Dropdown Menu */}
-      <div className="dropdown">
-        <button
-          className="dropdown-toggle"
-          onClick={(e) => {
-            e.stopPropagation(); // Prevent triggering outside click event
-            setDropdownVisible(!dropdownVisible);
-          }}
+      {/* DROPDOWN MENU */}
+      <div className="dropdown" ref={dropdownRef}>
+        <button 
+          className="dropdown-btn" 
+          onClick={() => setDropdownVisible(!dropdownVisible)}
         >
-          ☰ {/* Hamburger icon */}
+          ☰
         </button>
-        <ul className={`dropdown-menu ${dropdownVisible ? 'visible' : ''}`}>
-          {/* <li onClick={() => handleDropdownAction('restart')}>Restart</li> */}
-          <li onClick={() => handleDropdownAction('delete')}>Delete</li>
-          {/* <li onClick={() => handleDropdownAction('exit')}>Exit</li> */}
-        </ul>
+        {dropdownVisible && (
+          <ul className="dropdown-content">
+            <li onClick={deleteImages}>Delete</li>
+          </ul>
+        )}
       </div>
-      {/* Title */}
-      <h1 className="header-title">Emotion Recognition System</h1>
+
+
+      {/* HEADER TEXT */}
+      <h1>Emotion Recognition System</h1>
     </div>
   );
-};
+}
+
+
 
 export default Header;

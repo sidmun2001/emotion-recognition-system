@@ -1,178 +1,339 @@
-/* Root element styling */
-/* #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
-
-/* Body styling */
-/* .body {
-  background-color: aliceblue;
-  margin: 0;
-} */ */
-
-/* Root element styling */
-#root {
-  width: 100vw; /* Use full screen width */
-  height: 100vh; /* Use full screen height */
+/* Make the entire page centered */
+body, html 
+{
+  height: 100%;
   margin: 0;
   padding: 0;
-  text-align: center;
+  display: grid;
+  place-items: center;
+}
+
+
+
+
+
+/* WRAP EVERYTHING IN A CENTERED CONTAINER */
+.main-container 
+{
   display: flex;
-  flex-direction: column; /* Keep content stacked vertically */
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* Align everything to the top */
+  gap: 40px;
+  width: 90%;
+  max-width: 900px;
+  justify-items: center;
+  text-align: center;
+  margin-top: 120px; /* Adjusted to prevent overlap with header */
+  flex-grow: 0; /* Ensure it takes up only needed space */
+}
+
+
+/* Prevent flexbox stretching */
+.App 
+{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* Align everything at the top */
+}
+
+
+
+
+/* HEADER STYLING */
+.header 
+{
+  width: 100%;
+  display: flex;
   align-items: center;
   justify-content: center;
-  background-color: aliceblue; /* Keep existing background */
-}
-
-/* Body styling */
-body {
-  margin: 0;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden; /* Prevent scrolling */
-}
-
-
-/* Header Bar */
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #f9f9f9;
-  padding: 10px 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  position: sticky;
+  padding: 10px 15px;
+  height: 50px;
+  position: fixed;
   top: 0;
+  left: 0;
+  background-color: white;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
   z-index: 1000;
+  font-size: 1.2rem;
 }
 
-/* Dropdown positioned in the top-left corner */
-.dropdown {
-  flex: 0;
-}
 
-/* Hamburger Icon for Dropdown Toggle */
-.dropdown-toggle {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: #333;
-}
 
-.dropdown-toggle:hover {
-  color: #007bff;
-}
 
-/* Dropdown Menu */
-.dropdown-menu {
+
+/* DROPDOWN BUTTON */
+.dropdown 
+{
   position: absolute;
-  top: 50px;
-  left: 10px;
-  background-color: #fff;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  z-index: 1000;
-  border-radius: 4px;
-  overflow: hidden;
+  top: 10px;
+  left: 15px;
+  cursor: pointer;
+}
+
+
+/* Dropdown Button (☰ Icon) */
+.dropdown-btn 
+{
+  background: none;
+  border: 1px solid #ddd;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+/* DROPDOWN MENU */
+.dropdown-content 
+{
+  position: absolute;
+  top: 40px;
+  left: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 5px;
+  min-width: 120px;
   display: none;
 }
 
-.dropdown-menu.visible {
+
+/* Show dropdown when state is active */
+.dropdown .dropdown-content 
+{
   display: block;
 }
 
-.dropdown-menu li {
-  padding: 8px 16px;
+
+/* Dropdown options */
+.dropdown-content li 
+{
+  list-style: none;
+  padding: 8px 12px;
   cursor: pointer;
-  color: #333;
-  background-color: #fff;
-  transition: background-color 0.2s;
 }
 
-.dropdown-menu li:hover {
-  background-color: #f0f0f0;
+
+.dropdown-content li:hover 
+{
+  background: #f0f0f0;
 }
 
-/* Title Styling */
-.header-title {
-  flex: 1;
+
+
+
+/* CAMERA SECTION */
+.camera-section 
+{
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+}
+
+
+.video-preview 
+{
+  width: 600px;
+  max-width: 100%;
+  height: auto;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+}
+
+
+/* Center buttons properly */
+.start-camera-btn,
+.capture-upload-btn 
+{
+  margin-top: 15px;
+  padding: 10px 15px;
+  font-size: 1rem;
+}
+
+
+
+
+/* RESULTS SECTION - CENTERED */
+.results-section 
+{
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+  margin-top: 20px; /* Moves image boxes down */
+}
+
+
+/* IMAGE BOX STYLING */
+.image-box 
+{
+  width: 250px;
+  height: 250px;
+  display: flex;
+  flex-direction: column; /* Ensures heading is above the image */
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  font-size: 16px;
+  font-weight: bold;
+  color: #777;
+  /*overflow: hidden;*/
+  position: relative;
   text-align: center;
-  font-size: 1.8rem;
+}
+
+
+.image-box h3 
+{
+  position: absolute;
+  top: -77px; /* Moves title above the box */
+  left: 50%;
+  transform: translateX(-50%);
+  background: white; /* Ensures text is readable */
+  padding: 5px 10px;
+  font-size: 16px;
   font-weight: bold;
   color: #333;
-  margin: 0;
+  z-index: 5;
+  text-align: center;
 }
 
-/* Center the main container */
-.container {
+
+
+
+/* CHART SECTION - CENTERED */
+.chart-title 
+{
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 5px; /* Reduce spacing between title and pie chart */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.chart-container 
+{
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 20px;
-  margin-top: 50px;
+  width: 100%;
+  margin-top: -40px; /* Pull it up */
+  padding-top: 0; /* Ensure no extra padding */
+  margin-bottom: -20px; /* Reduce bottom space */
+  padding-bottom: 0;
 }
 
-/* Video preview styling */
-.video-preview {
+
+
+
+/* PLACEHOLDER BOXES */
+.placeholder-box 
+{
   width: 100%;
-  max-width: 600px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
+  height: 200px;
+  display: grid;
+  place-items: center;
+  border: 2px dashed #ccc;
+  border-radius: 10px;
+  font-size: 18px;
+  color: #777;
+  background-color: #f9f9f9;
+}
+
+
+
+
+.result-image 
+{
+  width: 100%;  /* Ensures image fits the container */
+  height: 100%;
+  object-fit: cover;  /* Ensures the image fills the box without distortion */
   border-radius: 8px;
 }
 
-/* Start Camera Button */
-.start-camera-btn {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  font-size: 1rem;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s;
+
+
+
+/* Emotion Legend (Above Pie Chart) */
+.emotion-legend 
+{
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 10px;
+  flex-wrap: wrap; /* Allows wrapping if screen is small */
 }
 
-.start-camera-btn:hover {
-  background-color: #0056b3;
-}
-
-/* File Upload Container */
-.file-upload-container {
+.legend-item 
+{
   display: flex;
   align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.legend-color-box 
+{
+  width: 14px;
+  height: 14px;
+  display: inline-block;
+  border-radius: 3px;
+}
+
+
+.legend 
+{
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.legend-items 
+{
+  display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 15px;
+  flex-wrap: wrap;
 }
 
-/* Choose File Button */
-.choose-file-btn {
-  padding: 5px 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-  background-color: white;
+.legend-item 
+{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 16px;
+  font-weight: bold;
 }
 
-/* Upload Image Button */
-.upload-image-btn {
-  background-color: #28a745;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  font-size: 1rem;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s;
+.legend-color 
+{
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  border-radius: 3px;
 }
 
-.upload-image-btn:hover {
-  background-color: #218838;
+
+
+
+.detected-emotion 
+{
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: -40px;
+}
+
+.emotion-text 
+{
+  color: #000000; /* Adjust color if needed */
 }

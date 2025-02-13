@@ -1,160 +1,171 @@
-import { useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import './App.css';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import Header from './Header';
+import EmotionPieChart from "./EmotionPieChart";
 
-import * as React from 'react';
-import { PieChart } from 'react-minimal-pie-chart';
+
+
 
 function Home() {
   const videoRef = useRef(null);
   const [cameraStarted, setCameraStarted] = useState(false);
-  const [selectedFile, setSelectedFile] = useState(null); // State to store the uploaded file
-  const navigate = useNavigate();
-  
+  const [capturedImage, setCapturedImage] = useState(null);
+  const [preprocessedImage, setPreprocessedImage] = useState(null);
+  const [emotionData, setEmotionData] = useState(null);
 
-  // Start the camera stream
-  const startCamera = async () => {
-    try {
+
+
+  const startCamera = async () => 
+  {
+    try 
+    {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
       videoRef.current.srcObject = stream;
       setCameraStarted(true);
-    } catch (error) {
+    } 
+    
+    catch (error) 
+    {
       console.error('Error accessing the camera:', error);
     }
   };
 
-  // Capture the image from the camera and upload it
-  const captureAndUpload = async () => {
-    try {
-      if (!cameraStarted) {
-        alert('Please start the camera first!');
-        return;
-      }
 
-      const canvas = document.createElement('canvas');
-      const video = videoRef.current;
 
-      // Set canvas dimensions to match the video stream
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+  const captureAndUpload = async () => 
+  {
+    if (!cameraStarted) 
+    {
+      alert('Please start the camera first!');
+      return;
+    }
 
-      // Convert canvas to Blob
-      const imageBlob = await new Promise((resolve) =>
-        canvas.toBlob(resolve, 'image/jpeg')
+
+    const canvas = document.createElement('canvas');
+    const video = videoRef.current;
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+
+    const imageBlob = await new Promise
+    (
+      (resolve) =>
+      canvas.toBlob(resolve, 'image/jpeg')
+    );
+
+
+    const formData = new FormData();
+    formData.append('image', imageBlob, 'captured_image.jpg');
+
+
+    try 
+    {
+      const response = await axios.post
+      ('http://localhost:8080/upload', formData, 
+        {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        }
       );
 
-      const formData = new FormData();
-      //const uniqueFilename = 'captured_image_' + Date.now() + '.jpg';
-      formData.append('image', imageBlob, 'captured_image.jpg');
-      
 
-      const response = await axios.post('http://localhost:8080/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-
-      console.log('Image uploaded successfully:', response.data);
-
-      // Navigate to the result page with response data
-      const { uploadedImageUrl, preprocessedImageUrl, emotion } = response.data;
-      navigate('/result', {
-        state: {
-          uploadedImageUrl,
-          preprocessedImageUrl,
-          emotion,
-        },
-      });
-    } catch (error) {
-      console.error('Error capturing or uploading image:', error);
-    }
-  };
-
-  // Handle file selection
-  const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
-  };
-
-  // Upload the selected file
-  const uploadImage = async () => {
-    try {
-      if (!selectedFile) {
-        alert('Please choose a file before uploading.');
-        return;
-      }
-
-      const formData = new FormData();
-      // formData.append('image', selectedFile, selectedFile.name);
-
-      formData.append('image', selectedFile, 'captured_image.jpg');
-
-      const response = await axios.post('http://localhost:8080/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-
-      console.log('Image uploaded successfully:', response.data);
-
-      // Navigate to the result page with response data
-      const { uploadedImageUrl, preprocessedImageUrl, emotion } = response.data;
-      navigate('/result', {
-        state: {
-          uploadedImageUrl,
-          preprocessedImageUrl,
-          emotion,
-        },
-        key: Date.now(), // Add a unique key to force re-mounting the component
-      });
-    } catch (error) {
+      setCapturedImage(response.data.uploadedImageUrl);
+      setPreprocessedImage(response.data.preprocessedImageUrl);
+      setEmotionData(response.data.emotionData);
+    } 
+    
+    catch (error) 
+    {
       console.error('Error uploading image:', error);
     }
   };
 
+
+
+  const getDetectedEmotion = () => 
+  {
+    if (!emotionData) return null;
+  
+    const sortedEmotions = Object.entries(emotionData).sort((a, b) => b[1] - a[1]);
+    return sortedEmotions[0][0]; // Get emotion with the highest probability
+  };
+  
+
+
+  const barChartData = 
+  {
+    labels: emotionData ? Object.keys(emotionData) : [],
+    datasets: 
+    [
+      {
+        label: 'Emotion Probabilities',
+        data: emotionData ? Object.values(emotionData) : [],
+        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+      },
+    ],
+  };
+
+
+
   return (
-    <>
-      <div className="App">
-        <Header />
-        <div className="container">
-          {/* Video preview */}
+    <div className="App">
+
+
+      <Header />
+      <div className="main-container">
+        <div className="camera-section">
           <video ref={videoRef} autoPlay className="video-preview"></video>
           {!cameraStarted && (
             <button onClick={startCamera} className="start-camera-btn">
               Start Camera
             </button>
           )}
-
-          {/* Capture and Upload button appears when the camera is started */}
           {cameraStarted && (
             <button onClick={captureAndUpload} className="capture-upload-btn">
               Capture and Upload
             </button>
           )}
-
-          {/* File Upload options
-          <div className="file-upload-container">
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleFileChange}
-              className="choose-file-btn"
-            />
-            <button onClick={uploadImage} className="upload-image-btn">
-              Upload Image
-            </button>
-          </div> */}
-
-
-
         </div>
-    
+
+        <div className="results-section">
+          <div className="image-box">
+            <h3>Captured Photo</h3>
+            {capturedImage ? (
+              <img src={capturedImage + "?t=" + new Date().getTime()} alt="Captured" className="result-image" />
+            ) : (
+              <div className="placeholder-box">No Image</div>
+            )} 
+          </div>
+
+          <div className="image-box">
+            <h3>Preprocessed Photo</h3>
+            {preprocessedImage ? (
+                <img src={preprocessedImage + "?t=" + new Date().getTime()} alt="Preprocessed" className="result-image" />
+              ) : (
+                <div className="placeholder-box">No Image</div>
+              )}
+          </div>
+        </div>
+
+
+        <div className="detected-emotion">
+          <h2>Detected Emotion: <span className="emotion-text">{getDetectedEmotion() || "No Data"}</span></h2>
+        </div>
+
+
+        <div className="chart-container">
+          <h3 className="chart-title">Emotion Probabilities</h3>
+          {emotionData ? <EmotionPieChart emotionData={emotionData} /> : <div className="placeholder-box">No Data</div>}
+        </div>
+
+
       </div>
-    </>
+    </div>
   );
 }
+
+
 
 export default Home;

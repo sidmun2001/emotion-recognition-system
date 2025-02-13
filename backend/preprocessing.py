@@ -1,8 +1,13 @@
 from PIL import Image
 import numpy as np
 import cv2
+
+
+
+
 # Load OpenCV's pre-trained Haar cascade for face detection
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+
 
 def preprocess_image(filepath, output_path):
     # Preprocesses the uploaded image by:
@@ -43,7 +48,10 @@ def preprocess_image(filepath, output_path):
         # Normalize the grayscale image
         normalized_image = grayscale_image / 255.0  # Scale to [0, 1]
 
+
         return True
+    
+    
     except Exception as e:
         print(f"Error during preprocessing: {e}")
         return False
