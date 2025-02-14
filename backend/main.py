@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, jsonify, send_from_directory
 from flask_cors import CORS
 import os
-from preprocessing import preprocess_image
+from preprocessing import preprocess_image, predict_emotion
 
 
 
@@ -58,9 +58,13 @@ def uploaded_file(filename):
 def processed_file(filename):
     return send_from_directory(app.config['PREPROCESSED_FOLDER'], filename)
 
+#sends server status 
+@app.route('/status', methods=['GET'])
+def status():
+    return "Server is running", 200
 
 
-@app.route('/upload', methods=['POST'])
+@app.route('/detect', methods=['POST'])
 def upload():
     if 'image' not in request.files:
         return jsonify({'error': 'No image'}), 400
@@ -80,10 +84,6 @@ def upload():
             return "Error in preprocessing the image", 500
 
 
-
-
-
-
         ####################################################################################################################
         # Placeholder for the detected emotion probabilities
         detected_emotion_probabilities = {
@@ -97,16 +97,15 @@ def upload():
         }  # Replace with model prediction when integrated
         ####################################################################################################################
 
-
-
-
-
-
         # Generate URLs for the uploaded and preprocessed images
         uploaded_image_url = f'http://127.0.0.1:8080/uploads/{file.filename}'
         preprocessed_image_url = f'http://127.0.0.1:8080/preprocessed/preprocessed_{file.filename}'
 
-
+        
+        if preprocessed_success:
+            # Call the predict_emotion function
+            print("calling model")
+            predict_emotion(preprocessed_path)
 
         return jsonify({
             'uploadedImageUrl': uploaded_image_url,
