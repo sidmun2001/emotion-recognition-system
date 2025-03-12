@@ -34,6 +34,9 @@
     ```
     If it doesn't run try:
         flask --app main run
+    If you want to specifically run at localhost:8080:
+        flask --app main run --port=8080
+
 
 6. **Access the application:**
     Open your web browser and go to `http://127.0.0.1:5000/`.

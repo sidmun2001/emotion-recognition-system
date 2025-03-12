@@ -16,12 +16,12 @@ const EmotionPieChart = ({ emotionData }) =>
   // Fixed color mapping for each emotion
   const emotionColors = 
   {
-    "Angry": "#FF0000",     // Red
-    "Disgusted": "#00CED1",   // Brown
-    "Fearful": "#800080",      // Purple
-    "Happy": "#FFD700",     // Gold
-    "Sad": "#1E90FF",       // Blue
-    "Surprised": "#FF69B4",  // Pink
+    "Anger": "#FF0000",     // Red
+    "Disgust": "#00CED1",   // Brown
+    "Fear": "#800080",      // Purple
+    "Happiness": "#FFD700",     // Gold
+    "Sadness": "#1E90FF",       // Blue
+    "Surprise": "#FF69B4",  // Pink
     "Neutral": "#A9A9A9"    // Gray
   };
 

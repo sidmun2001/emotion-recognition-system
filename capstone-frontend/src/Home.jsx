@@ -13,6 +13,7 @@ function Home() {
   const [capturedImage, setCapturedImage] = useState(null);
   const [preprocessedImage, setPreprocessedImage] = useState(null);
   const [emotionData, setEmotionData] = useState(null);
+  const[detectedEmotion, setDetectedEmotion] = useState(null);
   const [backendStatus, setBackendStatus] = useState(true);
 
 useEffect(() => {
@@ -26,7 +27,7 @@ useEffect(() => {
   };
 
   checkBackendStatus();
-}, []);
+}, [backendStatus]);
 
   const startCamera = async () => 
   {
@@ -75,19 +76,20 @@ useEffect(() => {
 
     try 
     {
+      console.log("Uploading image...");
       const response = await axios.post
       ('http://localhost:8080/detect', formData, 
         {
           headers: { 'Content-Type': 'multipart/form-data' },
         }
       );
-
+      console.log("Response from backend:", response.data); // Debugging
 
       setCapturedImage(response.data.uploadedImageUrl);
       setPreprocessedImage(response.data.preprocessedImageUrl);
-      setEmotionData(response.data.emotionData);
+      setEmotionData(response.data.emotionData.probabilities);
+      setDetectedEmotion(response.data.emotionData.emotion);
     } 
-    
     catch (error) 
     {
       console.error('Error uploading image:', error);
@@ -96,12 +98,15 @@ useEffect(() => {
 
 
 
-  const getDetectedEmotion = () => 
+  const getEmotionProbabilities = () => 
   {
-    if (!emotionData) return null;
-  
+    if (!emotionData) return "No Data";
+
+    // Convert object to an array and sort by highest probability
     const sortedEmotions = Object.entries(emotionData).sort((a, b) => b[1] - a[1]);
-    return sortedEmotions[0][0]; // Get emotion with the highest probability
+  
+    console.log("Sorted Emotions:", sortedEmotions); // Debugging
+    return sortedEmotions; // Get emotion with highest probability
   };
   
 
@@ -168,7 +173,7 @@ useEffect(() => {
 
 
         <div className="detected-emotion">
-          <h2>Detected Emotion: <span className="emotion-text">{getDetectedEmotion() || "No Data"}</span></h2>
+          <h2>Detected Emotion: <span className="emotion-text">{detectedEmotion || "No Data"}</span></h2>
         </div>
 
 

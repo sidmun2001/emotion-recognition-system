@@ -75,9 +75,10 @@ def upload():
         preprocessed_path = os.path.join(app.config['PREPROCESSED_FOLDER'], f"preprocessed_{file.filename}")
 
         # Call the preprocessing function
-        preprocessed_image, = preprocess_image(filepath, preprocessed_path)
-        if preprocessed_image is None:
-            return "Error in preprocessing the image", 500
+        resized_image_path  = preprocess_image(filepath, preprocessed_path)
+
+        if resized_image_path is None:
+            return jsonify({'error': 'Image preprocessing failed'}), 500
 
 
         ####################################################################################################################
@@ -100,8 +101,8 @@ def upload():
 
         # Call the predict_emotion function
         print("calling model")
-        detected_emotion_probabilities = predict_emotion(preprocessed_image)
-        print("prediction", prediction)
+        detected_emotion_probabilities = predict_emotion(resized_image_path )
+        print("prediction", detected_emotion_probabilities)
 
 
         # Generate URLs for the uploaded and preprocessed images
@@ -115,9 +116,7 @@ def upload():
             'emotionData': detected_emotion_probabilities
         }), 200
 
-
-
-    return jsonify({'error': 'Failed to save image'}), 500
+    return jsonify({'error': 'Failed to save image and get prediction'}), 500
 
 
 
