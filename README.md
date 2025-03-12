@@ -32,6 +32,8 @@
     ```bash
     flask run
     ```
+    If it doesn't run try:
+        flask --app main run
 
 6. **Access the application:**
     Open your web browser and go to `http://127.0.0.1:5000/`.
