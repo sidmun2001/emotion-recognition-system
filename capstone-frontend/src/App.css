@@ -10,9 +10,6 @@ body, html
 }
 
 
-
-
-
 /* WRAP EVERYTHING IN A CENTERED CONTAINER */
 .main-container 
 {
@@ -264,7 +261,7 @@ body, html
 /* Chart Section */
 .chart-container {
   display: flex;
-  flex-direction: column-reverse; /* Puts pie chart at the bottom */
+  flex-direction: column; /* Puts pie chart at the bottom */
   align-items: center;
   justify-content: center;
   width: 100%;
@@ -278,6 +275,7 @@ body, html
   font-weight: bold;
   text-align: center;
   margin-bottom: 10px;
+  padding-bottom: 5px;
 }
 
 /* Legend Styling */
@@ -285,7 +283,7 @@ body, html
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 }
 
 .legend-items {
