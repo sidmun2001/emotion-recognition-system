@@ -151,47 +151,50 @@ useEffect(() => {
           )}
         </div>
 
+
         <div className="results-section">
          <div className="captured-images">
-         <div className="image-box">
+          <div className="image-box">
             <h3>Captured Photo</h3>
             {capturedImage ? (
               <img src={capturedImage + "?t=" + new Date().getTime()} alt="Captured" className="result-image" />
             ) : (
-              <div className="placeholder-box">No Image</div>
+              <div className="placeholder-images">No Image</div>
             )} 
           </div>
 
-          <div className="image-box">
-            <h3>Preprocessed Photo</h3>
-            {preprocessedImage ? (
-                <img src={preprocessedImage + "?t=" + new Date().getTime()} alt="Preprocessed" className="result-image" />
-              ) : (
-                <div className="placeholder-box">No Image</div>
-              )}
-          </div>
+            <div className="image-box">
+              <h3>Preprocessed Photo</h3>
+              {preprocessedImage ? (
+                  <img src={preprocessedImage + "?t=" + new Date().getTime()} alt="Preprocessed" className="result-image" />
+                ) : (
+                  <div className="placeholder-images">No Image</div>
+                )}
+            </div>
         </div>
 
-          <div className="detected-emotion">
+        <div className="detected-emotion">
           <h2>Detected Emotion: <span className="emotion-text">{detectedEmotion || "No Data"}</span></h2>
         </div>
 
-
         <div className="chart-container">
           <h3 className="chart-title">Emotion Probabilities</h3>
-          {emotionData ? <EmotionPieChart emotionData={emotionData} /> : <div className="placeholder-box">No Data</div>}
+          
+          {emotionData ? <EmotionPieChart emotionData={emotionData} /> :  
+            <div className="placeholder-emotions">
+              <div className="placeholder-emotionsprobabilities">No Data</div>
+              <div className="placeholder-piechart">No Data</div>
+            </div>}
         </div>
       </div>
 
-      </div>
 
-      
+      </div>
 
 
     </div>
   );
 }
-
 
 
 export default Home;

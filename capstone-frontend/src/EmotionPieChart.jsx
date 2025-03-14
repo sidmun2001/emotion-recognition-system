@@ -58,7 +58,7 @@ const EmotionPieChart = ({ emotionData }) =>
 
 
       {/* Pie Chart */}
-      <h3 style={{ marginBottom: "-150px" }}></h3>
+      <h3 style={{ marginBottom: "-70px" }}></h3>
       <PieChart
         data={chartData}
         radius={30}

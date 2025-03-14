@@ -1,3 +1,23 @@
+/************************************/
+/********** MAIN SECTION **********/
+/************************************/
+
+/* Wrap everything in a centered container */
+.main-container 
+{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center; 
+  gap: 120px;
+  width: 100%;
+  max-width: 1000px;
+  justify-items: center;
+  text-align: center;
+  flex-grow: 0; /* Ensure it takes up only needed space */
+}
+
+
 /* Make the entire page centered */
 body, html 
 {
@@ -6,24 +26,7 @@ body, html
   padding: 0;
   display: grid;
   place-items: center;
-  background-color: #f9f9f9;
-}
-
-
-/* WRAP EVERYTHING IN A CENTERED CONTAINER */
-.main-container 
-{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center; /* Align everything to the top */
-  gap: 40px;
-  width: 90%;
-  max-width: 900px;
-  justify-items: center;
-  text-align: center;
-  margin-top: 120px; /* Adjusted to prevent overlap with header */
-  flex-grow: 0; /* Ensure it takes up only needed space */
+  background-color: #ffffff;
 }
 
 
@@ -35,13 +38,16 @@ body, html
   flex-direction: column;
   align-items: center;
   justify-content: center; /* Align everything at the top */
-  
 }
 
 
 
 
-/* HEADER STYLING */
+/************************************/
+/********** HEADER SECTION **********/
+/************************************/
+
+/* Header Styling */
 .header 
 {
   width: 100%;
@@ -54,22 +60,21 @@ body, html
   top: 0;
   left: 0;
   background-color: black;
+  color: white;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
   z-index: 1000;
-  font-size: 1.2rem;
+  font-size: 60;
 }
 
 
-
-
-
-/* DROPDOWN BUTTON */
+/* Dropdown Button */
 .dropdown 
 {
   position: absolute;
-  top: 10px;
+  top: 20px;
   left: 15px;
   cursor: pointer;
+ 
 }
 
 
@@ -80,11 +85,12 @@ body, html
   border: 1px solid #ddd;
   padding: 5px 10px;
   border-radius: 5px;
-  cursor: pointer;
+  cursor: pointer; 
+  color: white;
 }
 
 
-/* DROPDOWN MENU */
+/* Dropdoen Menu */
 .dropdown-content 
 {
   position: absolute;
@@ -118,20 +124,23 @@ body, html
 
 .dropdown-content li:hover 
 {
-  background: #f0f0f0;
+  background: rgb(38, 84, 250);
 }
 
 
 
 
-/* CAMERA SECTION */
+/************************************/
+/********** CAMERA SECTION **********/
+/************************************/
+
 .camera-section 
 {
   display: flex;
   flex-direction: column;
   justify-items: center;
   gap: 2px;
-
+  margin-top: 58vh;
 }
 
 
@@ -139,23 +148,29 @@ body, html
 {
   width: 40vw;
   height: 30vw;
+  border: 2px dashed #ccc;
+  border-radius: 10px;
+  margin-top: -50vh;
 }
 
 
-/* Center buttons properly */
 .start-camera-btn,
 .capture-upload-btn 
 {
   margin-top: 15px;
   padding: 10px 15px;
   font-size: 1rem;
-  color: white;
+  color: rgb(255, 255, 255);
+  background-color: rgb(0, 0, 0);
 }
 
 
 
 
-/* RESULTS SECTION - CENTERED */
+/*************************************/
+/********** RESULTS SECTION **********/
+/*************************************/
+
 .results-section 
 {
   display: flex;
@@ -164,21 +179,15 @@ body, html
   justify-content: center;
   gap: 20px;
   width: 100%;
-  margin-top: 20px; /* Moves image boxes down */
+  margin-top: 20vh; /* Moves image boxes down */
 }
 
-.captured-images{
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 20px;
-  width: 25wv;
-}
+
 /* IMAGE BOX STYLING */
 .image-box 
 {
-  width: 10vw;
-  height: 10vw;
+  width: 15vw;
+  height: 15vw;
   display: flex;
   flex-direction: column; /* Ensures heading is above the image */
   align-items: center;
@@ -191,48 +200,35 @@ body, html
   color: #777;
   /*overflow: hidden;*/
   position: relative;
-  text-align: center;
+  text-align: center; 
 }
 
 
+.captured-images
+{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 20px;
+  width: 30vw;
+}
+
+
+/* IMAGE BOX TEXT STYLING */
 .image-box h3 
 {
   position: absolute;
-  top: -77px; /* Moves title above the box */
+  top: 26vh; /* Moves title above the box */
   left: 50%;
   transform: translateX(-50%);
-  background: white; /* Ensures text is readable */
   padding: 5px 10px;
   font-size: 12px;
-  font-weight: bold;
-  color: #333;
+  color: #000000;
   z-index: 5;
   text-align: center;
+  font-weight: normal;
+ 
 }
-
-
-
-
-
-
-
-
-
-/* PLACEHOLDER BOXES */
-.placeholder-box 
-{
-  width: 100%;
-  height: 200px;
-  display: grid;
-  place-items: center;
-  border: 2px dashed #ccc;
-  border-radius: 10px;
-  font-size: 18px;
-  color: #777;
-  background-color: #f9f9f9;
-}
-
-
 
 
 .result-image 
@@ -247,10 +243,12 @@ body, html
 .detected-emotion 
 {
   text-align: center;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: bold;
-  margin-top: -40px;
+  margin-top: -36vh;
+  color: #000000;
 }
+
 
 .emotion-text 
 {
@@ -258,8 +256,29 @@ body, html
 }
 
 
-/* Chart Section */
-.chart-container {
+/* PLACEHOLDER FOR IMAGES */
+.placeholder-images 
+{
+  width: 100%;
+  height: 200px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #777;
+  background-color: #f9f9f9;
+}
+
+
+
+
+/************************************/
+/********** CHART SECTION ***********/
+/************************************/
+
+.chart-container 
+{
   display: flex;
   flex-direction: column; /* Puts pie chart at the bottom */
   align-items: center;
@@ -268,42 +287,54 @@ body, html
   max-width: 400px;
   padding: 10px;
   border-radius: 10px;
+  margin-top: 30vh;
 }
 
+
 /* Chart Title */
-.chart-title {
+.chart-title 
+{
   font-weight: bold;
   text-align: center;
   margin-bottom: 10px;
   padding-bottom: 5px;
+  color: #000000;
 }
 
+
 /* Legend Styling */
-.legend {
+.legend 
+{
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 5px;
 }
 
-.legend-items {
+
+.legend-items 
+{
   display: flex;
   flex-direction: row; /* Ensures legend items are in a row */
   justify-content: center;
   gap: 10px;
   flex-wrap: wrap; /* Wraps on small screens */
-  width: 100%;
+  width: 150%;
 }
 
-.legend-item {
+
+.legend-item 
+{
   display: flex;
   align-items: center;
   gap: 5px;
   font-size: 14px;
-  font-weight: bold;
+  color: #000000;
 }
 
-.legend-color {
+
+.legend-color 
+{
   width: 15px;
   height: 15px;
   display: inline-block;
@@ -311,5 +342,39 @@ body, html
 }
 
 
+/* PLACEHOLDER FOR EMOTIONS */
+.placeholder-emotions
+{
+  width: 100%;
+  height: 200px;
+}
 
 
+/* PLACEHOLDER FOR EMOTIONS PROBABILITIES */
+.placeholder-emotionsprobabilities
+{
+  width: 100%;
+  height: 86px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #777;
+  background-color: #f9f9f9;
+}
+
+
+/* PLACEHOLDER FOR PIE CHART */
+.placeholder-piechart 
+{
+  width: 100%;
+  height: 200px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #777;
+  background-color: #f9f9f9;
+}
