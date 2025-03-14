@@ -6,6 +6,7 @@ body, html
   padding: 0;
   display: grid;
   place-items: center;
+  background-color: #f9f9f9;
 }
 
 
@@ -16,9 +17,9 @@ body, html
 .main-container 
 {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: flex-start; /* Align everything to the top */
+  justify-content: center; /* Align everything to the top */
   gap: 40px;
   width: 90%;
   max-width: 900px;
@@ -36,7 +37,8 @@ body, html
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start; /* Align everything at the top */
+  justify-content: center; /* Align everything at the top */
+  
 }
 
 
@@ -54,7 +56,7 @@ body, html
   position: fixed;
   top: 0;
   left: 0;
-  background-color: white;
+  background-color: black;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
   z-index: 1000;
   font-size: 1.2rem;
@@ -91,7 +93,7 @@ body, html
   position: absolute;
   top: 40px;
   left: 0;
-  background: white;
+  background: black;
   border: 1px solid #ddd;
   border-radius: 5px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -128,19 +130,18 @@ body, html
 /* CAMERA SECTION */
 .camera-section 
 {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   justify-items: center;
-  gap: 10px;
+  gap: 2px;
+
 }
 
 
 .video-preview 
 {
-  width: 600px;
-  max-width: 100%;
-  height: auto;
-  border: 2px solid #ccc;
-  border-radius: 10px;
+  width: 40vw;
+  height: 30vw;
 }
 
 
@@ -151,6 +152,7 @@ body, html
   margin-top: 15px;
   padding: 10px 15px;
   font-size: 1rem;
+  color: white;
 }
 
 
@@ -160,18 +162,26 @@ body, html
 .results-section 
 {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
   gap: 20px;
   width: 100%;
   margin-top: 20px; /* Moves image boxes down */
 }
 
-
+.captured-images{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 20px;
+  width: 25wv;
+}
 /* IMAGE BOX STYLING */
 .image-box 
 {
-  width: 250px;
-  height: 250px;
+  width: 10vw;
+  height: 10vw;
   display: flex;
   flex-direction: column; /* Ensures heading is above the image */
   align-items: center;
@@ -196,7 +206,7 @@ body, html
   transform: translateX(-50%);
   background: white; /* Ensures text is readable */
   padding: 5px 10px;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: bold;
   color: #333;
   z-index: 5;
@@ -206,31 +216,7 @@ body, html
 
 
 
-/* CHART SECTION - CENTERED */
-.chart-title 
-{
-  text-align: center;
-  font-weight: bold;
-  margin-bottom: 5px; /* Reduce spacing between title and pie chart */
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
-
-.chart-container 
-{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  margin-top: -40px; /* Pull it up */
-  padding-top: 0; /* Ensure no extra padding */
-  margin-bottom: -20px; /* Reduce bottom space */
-  padding-bottom: 0;
-}
 
 
 
@@ -261,70 +247,6 @@ body, html
 }
 
 
-
-
-/* Emotion Legend (Above Pie Chart) */
-.emotion-legend 
-{
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-bottom: 10px;
-  flex-wrap: wrap; /* Allows wrapping if screen is small */
-}
-
-.legend-item 
-{
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 14px;
-  font-weight: bold;
-}
-
-.legend-color-box 
-{
-  width: 14px;
-  height: 14px;
-  display: inline-block;
-  border-radius: 3px;
-}
-
-
-.legend 
-{
-  text-align: center;
-  margin-bottom: 15px;
-}
-
-.legend-items 
-{
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  flex-wrap: wrap;
-}
-
-.legend-item 
-{
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.legend-color 
-{
-  width: 15px;
-  height: 15px;
-  display: inline-block;
-  border-radius: 3px;
-}
-
-
-
-
 .detected-emotion 
 {
   text-align: center;
@@ -337,3 +259,59 @@ body, html
 {
   color: #000000; /* Adjust color if needed */
 }
+
+
+/* Chart Section */
+.chart-container {
+  display: flex;
+  flex-direction: column-reverse; /* Puts pie chart at the bottom */
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 400px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+/* Chart Title */
+.chart-title {
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Legend Styling */
+.legend {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.legend-items {
+  display: flex;
+  flex-direction: row; /* Ensures legend items are in a row */
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap; /* Wraps on small screens */
+  width: 100%;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.legend-color {
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  border-radius: 3px;
+}
+
+
+
+

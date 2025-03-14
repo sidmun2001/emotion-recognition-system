@@ -152,7 +152,8 @@ useEffect(() => {
         </div>
 
         <div className="results-section">
-          <div className="image-box">
+         <div className="captured-images">
+         <div className="image-box">
             <h3>Captured Photo</h3>
             {capturedImage ? (
               <img src={capturedImage + "?t=" + new Date().getTime()} alt="Captured" className="result-image" />
@@ -171,8 +172,7 @@ useEffect(() => {
           </div>
         </div>
 
-
-        <div className="detected-emotion">
+          <div className="detected-emotion">
           <h2>Detected Emotion: <span className="emotion-text">{detectedEmotion || "No Data"}</span></h2>
         </div>
 
@@ -181,9 +181,13 @@ useEffect(() => {
           <h3 className="chart-title">Emotion Probabilities</h3>
           {emotionData ? <EmotionPieChart emotionData={emotionData} /> : <div className="placeholder-box">No Data</div>}
         </div>
-
+      </div>
 
       </div>
+
+      
+
+
     </div>
   );
 }
