@@ -10,7 +10,7 @@ from PIL import Image
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
 
 #load trained model
-model = load_model("Final_Model_V1.h5")
+model = load_model("DenseNet161_Model_NoEarlyStopping.h5")
 
 
 def preprocess_image(filepath, output_path):
@@ -27,11 +27,11 @@ def preprocess_image(filepath, output_path):
             print("Error: Unable to load image.")
             return None
 
-        # Convert to grayscale **only if it is not already grayscale**
-        if len(image.shape) == 3:  # Image has 3 channels (RGB or BGR)
-            gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        else:
-            gray = image  # Already grayscale
+        # # Convert to grayscale **only if it is not already grayscale**
+        # if len(image.shape) == 3:  # Image has 3 channels (RGB or BGR)
+        #     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        # else:
+        gray = image  # Already grayscale
 
         # Detect faces in the image
         faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
@@ -60,8 +60,6 @@ def preprocess_image(filepath, output_path):
         # final_image = np.expand_dims(final_image, axis=-1)  # Add channel dimension
 
 
-#  # Ensure shape is (1, 48, 48, 1) → Correct model input shape
-#         final_image = normalized_image.reshape(1, 48, 48, 1)
         print("shape of resized image", resized_image.shape)
 
         # Save the preprocessed image to the output path
@@ -102,10 +100,6 @@ def predict_emotion(resized_image_path):
         # predicted_index = np.argmax(predictions)
         # predicted_emotion = emotion_labels[predicted_index]
 
-        # # Convert probabilities to a dictionary
-        # emotion_probabilities = {
-        #     emotion_labels[i]: float(predictions[0][i]) for i in range(len(emotion_labels))
-        # }
 
            # Convert probabilities to percentages
         emotion_percentages = {
