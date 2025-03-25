@@ -8,47 +8,25 @@ from preprocessing import preprocess_image, predict_emotion
 app = Flask(__name__)
 cors  = CORS(app, origins = '*')
 
-UPLOAD_FOLDER = 'uploads'
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-
-
-database = ["Alice", "Bob"]
-
-
-@app.route('/api/users', methods=['GET'])
-def users():
-    return jsonify({'users': database})
-
-
-@app.route('/upload2', methods=['POST'])
-def upload_image():
-    if 'image' not in request.files:
-        return jsonify({'error': 'No image file provided'}), 400
-    
-    image = request.files['image']
-    if image:
-        image_path = os.path.join(UPLOAD_FOLDER, image.filename)
-        image.save(image_path)
-        return jsonify({'message': 'Image uploaded successfully!', 'path': image_path}), 200
-
-    return jsonify({'error': 'Failed to save image'}), 500
-
 
 # Configure the existing upload folders
-UPLOAD_FOLDER = 'images/uploaded images'
+#UPLOAD_FOLDER = 'images/uploaded images'
 PREPROCESSED_FOLDER = 'images/preprocessed images'
+UPLOAD_FOLDER = 'uploads'
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+os.makedirs(PREPROCESSED_FOLDER, exist_ok=True)
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['PREPROCESSED_FOLDER'] = PREPROCESSED_FOLDER
 
 
-# Route for showing uploaded and preprocessed images
+# Route for viewing uploaded and preprocessed images
 #http://127.0.0.1:8080/uploads/captured_image.jpg
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
-#shows preprocessed imagges
+#route to view preprocessed image
 # http://127.0.0.1:8080/preprocessed/preprocessed_captured_image.jpg
 @app.route('/preprocessed/<filename>')
 def processed_file(filename):
@@ -59,7 +37,7 @@ def processed_file(filename):
 def status():
     return "Server is running", 200
 
-
+#ROute that uploads the image and returns the emotion detected
 @app.route('/detect', methods=['POST'])
 def upload():
     if 'image' not in request.files:
@@ -79,7 +57,6 @@ def upload():
 
         if resized_image_path is None:
             return jsonify({'error': 'Image preprocessing failed'}), 500
-
 
         ####################################################################################################################
         # Placeholder for the detected emotion probabilities

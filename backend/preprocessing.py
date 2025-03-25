@@ -2,15 +2,14 @@ from PIL import Image
 import numpy as np
 import cv2
 from tensorflow.keras.models import load_model
-from PIL import Image
-
 
 
 # Load OpenCV's pre-trained Haar cascade for face detection
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
 
 #load trained model
-model = load_model("DenseNet161_Model_NoEarlyStopping.h5")
+model = load_model("custom_cnn_march24.h5")
+#model = load_model("vgg19_custom_cnn_march24.h5")
 
 
 def preprocess_image(filepath, output_path):
