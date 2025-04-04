@@ -218,7 +218,7 @@ body, html
 .image-box h3 
 {
   position: absolute;
-  top: 26vh; /* Moves title above the box */
+  top: 30vh; /* Moves title above the box */
   left: 50%;
   transform: translateX(-50%);
   padding: 5px 10px;
@@ -240,12 +240,14 @@ body, html
 }
 
 
-.detected-emotion 
+.detected-emotion h2
 {
   text-align: center;
-  font-size: 12px;
+  color: #000000;
   font-weight: bold;
-  margin-top: -36vh;
+  text-align: center;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
   color: #000000;
 }
 
@@ -287,7 +289,7 @@ body, html
   max-width: 400px;
   padding: 10px;
   border-radius: 10px;
-  margin-top: 30vh;
+  margin-top: 10vh;
 }
 
 
